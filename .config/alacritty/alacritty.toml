@@ -1,0 +1,64 @@
+# --- Window Settings ---
+[window]
+# This is the inner padding you asked for (in pixels)
+padding = { x = 20, y = 20 }
+
+# Adds a bit of transparency (0.0 to 1.0)
+opacity = 0.95
+
+# Blur background (works on some compositors like Picom)
+blur = true
+
+# Use "None" if you want a borderless look in i3
+decorations = "Full"
+
+# --- Font Settings ---
+[font]
+# I recommend "JetBrainsMono Nerd Font" or "Hack Nerd Font" 
+# to ensure your icons in Zsh show up correctly.
+normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
+bold = { family = "JetBrainsMono Nerd Font", style = "Bold" }
+size = 11.0
+
+# --- Cursor ---
+[cursor]
+style = { shape = "Beam", blinking = "On" }
+
+# --- Tokyo Night Theme (Modern & Easy on eyes) ---
+[colors.primary]
+background = "#1a1b26"
+foreground = "#a9b1d6"
+
+[colors.normal]
+black   = "#32344a"
+red     = "#f7768e"
+green   = "#9ece6a"
+yellow  = "#e0af68"
+blue    = "#7aa2f7"
+magenta = "#ad8ee6"
+cyan    = "#449dab"
+white   = "#787c99"
+
+[colors.bright]
+black   = "#444b6a"
+red     = "#ff7a93"
+green   = "#b9f27c"
+yellow  = "#ff9e64"
+blue    = "#7da6ff"
+magenta = "#bb9af7"
+cyan    = "#0db9d7"
+white   = "#acb0d0"
+
+# --- Miscellaneous ---
+[selection]
+save_to_clipboard = true
+
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001b\r"
+
+[mouse]
+bindings = [
+	{ mouse = "Right", action = "Paste" },
+]
