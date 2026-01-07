@@ -113,7 +113,7 @@ alias c="clear"
 alias e="exit"
 alias sn="shutdown -h now"
 alias prb="sudo modprobe v4l2loopback"
-alias prepdocker="docker run -d --name epistola-db -e POSTGRES_USER=epistola -e POSTGRES_PASSWORD=epistola -e POSTGRES_DB=epistola -p 4001:5432 postgres:latest"
+alias prepdocker="docker run -d --name epistola -e POSTGRES_USER=epistola -e POSTGRES_PASSWORD=epistola -e POSTGRES_DB=epistola -p 4001:5432 postgres:latest"
 alias ytp='mpv "$(xclip -o -selection clipboard)"'
 alias gs="gradle :apps:epistola:bootRun --args='--spring.profiles.active=local'"
 
