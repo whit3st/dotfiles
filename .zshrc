@@ -122,4 +122,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # mise version manager
-eval "$(mise activate zsh)"
+eval "$($HOME/.local/bin/mise activate zsh)"
+
+eval "$($HOME/.local/bin/mise activate zsh)" # added by https://mise.run/zsh
+
+# opencode
+export PATH=/home/whit3st/.opencode/bin:$PATH

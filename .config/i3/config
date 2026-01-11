@@ -217,7 +217,7 @@ bindsym Mod4+r mode "resize"
 exec_always --no-startup-id picom --config ~/.config/picom/picom.conf
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec_always --no-startup-id autorandr --change
-exec_always --no-startup-id feh --bg-fill ~/wallpapers/wallp.jpeg
+exec_always --no-startup-id feh --bg-fill ~/wallpapers/wallp4.jpeg
 
 default_border pixel 0
 default_floating_border pixel 0
