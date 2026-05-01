@@ -1,0 +1,21 @@
+# Local-only overrides for this machine.
+# Copy to ~/.zshrc.local and keep it untracked.
+
+# Common aliases
+alias c="clear"
+alias e="exit"
+
+# Machine/project-specific aliases
+# alias sn="shutdown -h now"
+# alias prb="sudo modprobe v4l2loopback"
+# alias prepdocker="docker stop epistola && docker rm epistola -v && docker run -d --name epistola -e POSTGRES_USER=epistola -e POSTGRES_PASSWORD=epistola -e POSTGRES_DB=epistola -p 4001:5432 postgres:latest"
+# alias ytp='mpv "$(xclip -o -selection clipboard)"'
+# alias gs="gradle :apps:epistola:bootRun --args='--spring.profiles.active=local'"
+
+# Auto-attach tmux session 0
+# if command -v tmux >/dev/null 2>&1 && [ -z "$TMUX" ] && [ -n "$PS1" ]; then
+#   tmux attach -t 0 2>/dev/null || tmux new -s 0
+# fi
+
+# Example machine-specific exports
+# export JAVA_HOME="$HOME/.local/share/mise/installs/java/current"

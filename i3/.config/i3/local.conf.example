@@ -1,0 +1,5 @@
+# Local i3 overrides for this machine.
+# Copy to ~/.config/i3/local.conf and include manually if needed.
+
+# Example:
+# bindsym $mod+Shift+F12 exec --no-startup-id notify-send "local override"

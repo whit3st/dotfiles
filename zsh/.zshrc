@@ -109,14 +109,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias c="clear"
-alias e="exit"
-alias sn="shutdown -h now"
-alias prb="sudo modprobe v4l2loopback"
-alias prepdocker="docker stop epistola && docker rm epistola -v && docker run -d --name epistola -e POSTGRES_USER=epistola -e POSTGRES_PASSWORD=epistola -e POSTGRES_DB=epistola -p 4001:5432 postgres:latest"
-alias ytp='mpv "$(xclip -o -selection clipboard)"'
-alias gs="gradle :apps:epistola:bootRun --args='--spring.profiles.active=local'"
-# alias cp="xclip -selection clipboard"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -135,3 +127,7 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+if [ -f "$HOME/.zshrc.local" ]; then
+  source "$HOME/.zshrc.local"
+fi

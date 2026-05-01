@@ -23,6 +23,13 @@ stow zsh git i3 polybar alacritty picom rofi gtk x11 scripts autorandr pipewire 
 cp .gitconfig.local.example ~/.gitconfig.local
 # edit ~/.gitconfig.local with your name/email
 
+# 4.2 Optional local shell overrides
+cp .zshrc.local.example ~/.zshrc.local
+# add machine-specific aliases/env vars to ~/.zshrc.local
+
+# 4.3 Optional local i3 overrides
+cp .config/i3/local.conf.example ~/.config/i3/local.conf
+
 # 5. Reboot
 reboot
 ```

@@ -34,14 +34,14 @@ Outcome:
 Outcome:
 - Repo can be installed selectively (`stow zsh git i3 ...`) instead of all-or-nothing `stow .`.
 
-## Phase 3 - Shared vs Local Configuration Boundaries [pending]
+## Phase 3 - Shared vs Local Configuration Boundaries [completed]
 
-- [ ] Introduce local include files (untracked) with tracked examples:
-  - `~/.zshrc.local` + `.zshrc.local.example`
-  - `~/.gitconfig.local` + `.gitconfig.local.example` (already started)
-  - optional `~/.config/i3/local.conf` + example include path
-- [ ] Move personal aliases, machine-specific env vars, and host quirks into local files.
-- [ ] Keep committed defaults minimal and portable.
+- [x] Introduce local include files (untracked) with tracked examples:
+  - `~/.zshrc.local` + `.zshrc.local.example` [done]
+  - `~/.gitconfig.local` + `.gitconfig.local.example` [done]
+  - optional `~/.config/i3/local.conf` + example include path [example added]
+- [x] Move personal aliases, machine-specific env vars, and host quirks into local files.
+- [x] Keep committed defaults minimal and portable.
 
 Outcome:
 - Shared repo stays clean; per-machine customization remains easy.
