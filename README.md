@@ -1,6 +1,6 @@
 # Dotfiles
 
-i3 + polybar + alacritty + picom on Arch
+Modular GNU Stow dotfiles for Arch Linux (i3 + polybar + alacritty + picom).
 
 ## Fresh Install
 
@@ -16,8 +16,8 @@ git clone git@github.com:USERNAME/dotfiles.git
 cd dotfiles
 ./install.sh
 
-# 4. Stow
-stow .
+# 4. Stow selected packages
+stow zsh git i3 polybar alacritty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers
 
 # 4.1 Set your git identity
 cp .gitconfig.local.example ~/.gitconfig.local
@@ -42,20 +42,31 @@ cat ~/.ssh/id_ed25519.pub
 autorandr --save home
 ```
 
-## What's Included
+## Stow Packages
 
-| Config | Description |
+| Package | Description |
 |--------|-------------|
-| i3 | Window manager |
-| polybar | Status bar |
-| alacritty | Terminal |
-| picom | Compositor (blur, shadows, rounded corners) |
-| rofi | App launcher |
-| autorandr | Display profiles (240Hz) |
-| gtk-3.0/4.0 | GTK theme settings |
-| .themes | Orchis theme |
-| fonts | JetBrains Mono, Iosevka, Icomoon |
-| wallpapers | Wallpaper |
+| `zsh` | Shell config (`~/.zshrc`) |
+| `git` | Git config and local identity template |
+| `i3` | i3 window manager config |
+| `polybar` | Polybar config and launcher |
+| `alacritty` | Terminal config |
+| `picom` | Compositor config |
+| `rofi` | Launcher config |
+| `gtk` | GTK 2/3/4 settings |
+| `fontconfig` | Font config and local fonts |
+| `autorandr` | Display profiles |
+| `pipewire` | Audio tuning snippets |
+| `x11` | X11 startup resources |
+| `scripts` | Helper scripts (night mode) |
+| `theme` | Orchis theme files |
+| `wallpapers` | Wallpapers |
+
+## Minimal Stow Example
+
+```bash
+stow zsh git i3 polybar alacritty picom rofi
+```
 
 ## Keybinds
 

@@ -18,7 +18,7 @@ decorations = "Full"
 # to ensure your icons in Zsh show up correctly.
 normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
 bold = { family = "JetBrainsMono Nerd Font", style = "Bold" }
-size = 11.0
+size = 10.0
 
 # --- Cursor ---
 [cursor]
