@@ -63,27 +63,27 @@ Outcome:
 Outcome:
 - Installation is safer, clearer, and easier to adapt across machines.
 
-## Phase 5 - Documentation and Onboarding [pending]
+## Phase 5 - Documentation and Onboarding [completed]
 
-- [ ] Rewrite `README.md` around modular workflow.
-- [ ] Document recommended install paths:
+- [x] Rewrite `README.md` around modular workflow.
+- [x] Document recommended install paths:
   - minimal setup
   - full desktop setup
   - per-package stow examples
-- [ ] Document local config setup step clearly.
-- [ ] Add troubleshooting notes for i3/polybar/picom/startup ordering.
+- [x] Document local config setup step clearly.
+- [x] Add troubleshooting notes for i3/polybar/picom/startup ordering.
 
 Outcome:
 - New machine setup becomes predictable and reproducible.
 
-## Phase 6 - Validation and Regression Checks [pending]
+## Phase 6 - Validation and Regression Checks [completed]
 
-- [ ] Add a lightweight `check.sh` for sanity checks (paths, required binaries, shell syntax).
-- [ ] Validate key configs after stow:
+- [x] Add a lightweight `check.sh` for sanity checks (paths, required binaries, shell syntax).
+- [x] Validate key configs after stow:
   - `zsh -n ~/.zshrc`
   - `i3-msg reload` (if i3 is running)
   - `polybar` launch script smoke test
-- [ ] Confirm no unintended tracked local state files.
+- [x] Confirm no unintended tracked local state files.
 
 Outcome:
 - Changes are safer to evolve over time with quick confidence checks.

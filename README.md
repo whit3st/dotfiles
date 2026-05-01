@@ -2,7 +2,32 @@
 
 Modular GNU Stow dotfiles for Arch Linux (i3 + polybar + alacritty + picom).
 
-## Fresh Install
+## Quick Start
+
+### Minimal setup (shell + git + tmux workflow)
+
+```bash
+cd ~/dotfiles
+./bootstrap.sh
+stow zsh git
+cp .gitconfig.local.example ~/.gitconfig.local
+cp .zshrc.local.example ~/.zshrc.local
+```
+
+### Full desktop setup (i3 stack)
+
+```bash
+cd ~/dotfiles
+./bootstrap.sh
+./packages.sh --profiles core,desktop,dev --with-hardware --with-aur
+./services.sh --display-manager lightdm --add-docker-group
+stow zsh git i3 polybar alacritty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers
+cp .gitconfig.local.example ~/.gitconfig.local
+cp .zshrc.local.example ~/.zshrc.local
+cp i3/.config/i3/local.conf.example ~/.config/i3/local.conf
+```
+
+## Legacy Full Install
 
 ```bash
 # 1. Install git and stow
@@ -28,7 +53,7 @@ cp .zshrc.local.example ~/.zshrc.local
 # add machine-specific aliases/env vars to ~/.zshrc.local
 
 # 4.3 Optional local i3 overrides
-cp .config/i3/local.conf.example ~/.config/i3/local.conf
+cp i3/.config/i3/local.conf.example ~/.config/i3/local.conf
 
 # 5. Reboot
 reboot
@@ -75,6 +100,19 @@ autorandr --save home
 stow zsh git i3 polybar alacritty picom rofi
 ```
 
+## Per-Package Examples
+
+```bash
+# only terminal stack
+stow alacritty picom
+
+# only wm + bar + launcher
+stow i3 polybar rofi
+
+# only visuals
+stow gtk theme wallpapers fontconfig
+```
+
 ## Modular Installer Commands
 
 ```bash
@@ -106,3 +144,22 @@ stow zsh git i3 polybar alacritty picom rofi
 - Mod key is Super (Windows key)
 - Display manager: lightdm
 - Monitor config saved in `~/.config/autorandr/home/`
+
+## Troubleshooting
+
+```bash
+# verify stow links and config sanity
+./check.sh
+
+# if a package path changed, restow it
+stow -D i3 polybar picom alacritty rofi gtk
+stow i3 polybar picom alacritty rofi gtk
+
+# restart common desktop pieces
+i3-msg reload
+pkill picom; picom --config ~/.config/picom/picom.conf &
+~/.config/polybar/launch.sh
+```
+
+- Polybar `wlan` module warning is expected on systems without a wireless interface.
+- Polybar tray stacking warnings can happen on X11 and are often non-fatal.
