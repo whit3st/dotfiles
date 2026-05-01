@@ -46,19 +46,19 @@ Outcome:
 Outcome:
 - Shared repo stays clean; per-machine customization remains easy.
 
-## Phase 4 - Installer/Profile Split [pending]
+## Phase 4 - Installer/Profile Split [completed]
 
-- [ ] Replace monolithic installer behavior with explicit scripts:
+- [x] Replace monolithic installer behavior with explicit scripts:
   - `bootstrap.sh` (minimum prerequisites)
   - `packages.sh` (profile-based package install)
   - optional `services.sh` (explicit service enablement)
-- [ ] Define install profiles, for example:
+- [x] Define install profiles, for example:
   - `core`
   - `desktop`
   - `dev`
   - `media`
-- [ ] Keep hardware detection (CPU microcode/GPU) explicit and testable.
-- [ ] Avoid forcing display manager choice by default.
+- [x] Keep hardware detection (CPU microcode/GPU) explicit and testable.
+- [x] Avoid forcing display manager choice by default.
 
 Outcome:
 - Installation is safer, clearer, and easier to adapt across machines.

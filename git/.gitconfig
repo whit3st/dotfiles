@@ -4,3 +4,4 @@
 	defaultBranch = main
 [include]
 	path = ~/.gitconfig.local
+	name = Alican Akyildiz

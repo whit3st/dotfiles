@@ -1,0 +1,149 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [[ ${EUID} -eq 0 ]]; then
+  printf '[x] Do not run as root\n' >&2
+  exit 1
+fi
+
+CORE_PKGS=(
+  git stow zsh vim fastfetch htop tree unzip unrar ntfs-3g
+  openssh networkmanager bluez bluez-utils
+)
+
+DESKTOP_PKGS=(
+  i3-wm i3lock i3status polybar rofi dmenu picom feh arandr
+  thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman tumbler
+  alacritty kitty flameshot mousepad
+  xorg-xinit xorg-xset xorg-xsetroot xorg-xrandr wmname
+  autorandr xclip xdotool brightnessctl
+  pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber pavucontrol
+  noto-fonts noto-fonts-cjk ttf-dejavu ttf-jetbrains-mono-nerd ttf-liberation ttf-roboto
+  woff2-font-awesome
+  gtk-engine-murrine breeze-icons breeze-gtk breeze kde-gtk-config nwg-look
+)
+
+DEV_PKGS=(
+  docker docker-compose gradle jdk-openjdk mise nvm
+)
+
+MEDIA_PKGS=(
+  firefox mpv obs-studio imagemagick img2pdf yt-dlp
+)
+
+SYSTEM_PKGS=(
+  btrfs-progs efibootmgr zram-generator flatpak os-prober pciutils
+)
+
+AUR_PKGS=(
+  brave-bin visual-studio-code-bin slack-desktop legcord-bin alacritty-themes spoofdpi zapzap
+)
+
+usage() {
+  cat <<'EOF'
+Usage: ./packages.sh [options]
+
+Options:
+  --profiles <list>    Comma-separated profiles: core,desktop,dev,media,system
+  --with-aur           Install AUR package set via yay
+  --with-hardware      Add detected microcode/GPU packages
+  --help               Show this help
+
+Example:
+  ./packages.sh --profiles core,desktop,dev --with-hardware --with-aur
+EOF
+}
+
+install_yay() {
+  if command -v yay >/dev/null 2>&1; then
+    return
+  fi
+
+  printf '[*] Installing yay...\n'
+  git clone https://aur.archlinux.org/yay.git /tmp/yay
+  pushd /tmp/yay >/dev/null
+  makepkg -si --noconfirm
+  popd >/dev/null
+  rm -rf /tmp/yay
+}
+
+add_hardware_packages() {
+  local cpu_vendor
+  cpu_vendor="$(awk -F: '/vendor_id/ {gsub(/^[[:space:]]+/, "", $2); print $2; exit}' /proc/cpuinfo)"
+
+  case "${cpu_vendor}" in
+    GenuineIntel)
+      SELECTED_PKGS+=(intel-ucode)
+      ;;
+    AuthenticAMD)
+      SELECTED_PKGS+=(amd-ucode)
+      ;;
+  esac
+
+  if lspci | grep -qi 'NVIDIA'; then
+    SELECTED_PKGS+=(nvidia-utils nvidia-settings)
+  fi
+}
+
+PROFILE_LIST="core"
+WITH_AUR=false
+WITH_HARDWARE=false
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --profiles)
+      PROFILE_LIST="${2:-}"
+      shift 2
+      ;;
+    --with-aur)
+      WITH_AUR=true
+      shift
+      ;;
+    --with-hardware)
+      WITH_HARDWARE=true
+      shift
+      ;;
+    --help)
+      usage
+      exit 0
+      ;;
+    *)
+      printf '[x] Unknown option: %s\n' "$1" >&2
+      usage
+      exit 1
+      ;;
+  esac
+done
+
+IFS=',' read -r -a profiles <<< "${PROFILE_LIST}"
+SELECTED_PKGS=()
+
+for profile in "${profiles[@]}"; do
+  case "${profile}" in
+    core) SELECTED_PKGS+=("${CORE_PKGS[@]}") ;;
+    desktop) SELECTED_PKGS+=("${DESKTOP_PKGS[@]}") ;;
+    dev) SELECTED_PKGS+=("${DEV_PKGS[@]}") ;;
+    media) SELECTED_PKGS+=("${MEDIA_PKGS[@]}") ;;
+    system) SELECTED_PKGS+=("${SYSTEM_PKGS[@]}") ;;
+    *)
+      printf '[x] Unknown profile: %s\n' "${profile}" >&2
+      exit 1
+      ;;
+  esac
+done
+
+if [[ "${WITH_HARDWARE}" == true ]]; then
+  add_hardware_packages
+fi
+
+printf '[*] Installing selected pacman packages...\n'
+sudo pacman -S --needed --noconfirm "${SELECTED_PKGS[@]}"
+
+if [[ "${WITH_AUR}" == true ]]; then
+  install_yay
+  printf '[*] Installing selected AUR packages...\n'
+  yay -S --needed --noconfirm "${AUR_PKGS[@]}"
+fi
+
+printf '[*] Package installation complete.\n'

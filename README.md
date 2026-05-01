@@ -75,6 +75,19 @@ autorandr --save home
 stow zsh git i3 polybar alacritty picom rofi
 ```
 
+## Modular Installer Commands
+
+```bash
+# prerequisites only
+./bootstrap.sh
+
+# install package profiles
+./packages.sh --profiles core,desktop,dev --with-hardware --with-aur
+
+# enable services explicitly
+./services.sh --display-manager lightdm --add-docker-group
+```
+
 ## Keybinds
 
 | Key | Action |
