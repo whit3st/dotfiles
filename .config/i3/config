@@ -221,7 +221,7 @@ bindsym Mod4+r mode "resize"
 exec_always --no-startup-id picom --config ~/.config/picom/picom.conf
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec_always --no-startup-id autorandr --change
-exec_always --no-startup-id feh --bg-fill ~/wallpapers/wallp4.jpeg
+exec_always --no-startup-id feh --bg-fill "$HOME/wallpapers/wallp4.jpeg"
 
 default_border pixel 0
 default_floating_border pixel 0
@@ -250,7 +250,7 @@ for_window [class="(?i)thunar" title="File Operation Progress"] floating enable
 exec_always --no-startup-id wmname LG3D
 
 # Night Mode ON
-bindsym $mod+Shift+n exec ~/nightmode.sh on
+bindsym $mod+Shift+n exec "$HOME/nightmode.sh" on
 
 # Night Mode OFF
-bindsym $mod+Control+n exec ~/nightmode.sh off
+bindsym $mod+Control+n exec "$HOME/nightmode.sh" off

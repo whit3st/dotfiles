@@ -34,7 +34,6 @@ PACMAN_PKGS=(
     linux
     linux-headers
     linux-firmware
-    intel-ucode
 
     # Shell & Terminal
     zsh
@@ -79,8 +78,6 @@ PACMAN_PKGS=(
     bluez-utils
 
     # Graphics & Display
-    nvidia-utils
-    nvidia-settings
     brightnessctl
 
     # Fonts
@@ -107,6 +104,7 @@ PACMAN_PKGS=(
     htop
     tree
     fastfetch
+    pciutils
     unzip
     unrar
     ntfs-3g
@@ -193,6 +191,24 @@ setup_services() {
     sudo usermod -aG docker "$USER"
 }
 
+add_hardware_packages() {
+    local cpu_vendor
+    cpu_vendor="$(awk -F: '/vendor_id/ {gsub(/^[[:space:]]+/, "", $2); print $2; exit}' /proc/cpuinfo)"
+
+    case "$cpu_vendor" in
+        GenuineIntel)
+            PACMAN_PKGS+=(intel-ucode)
+            ;;
+        AuthenticAMD)
+            PACMAN_PKGS+=(amd-ucode)
+            ;;
+    esac
+
+    if lspci | grep -qi 'NVIDIA'; then
+        PACMAN_PKGS+=(nvidia-utils nvidia-settings)
+    fi
+}
+
 install_oh_my_zsh() {
     if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
         print_status "Installing Oh My Zsh..."
@@ -226,6 +242,7 @@ main() {
     print_status "Updating system..."
     sudo pacman -Syu --noconfirm
 
+    add_hardware_packages
     install_pacman_packages
     install_yay
     install_aur_packages

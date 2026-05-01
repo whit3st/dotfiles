@@ -1,5 +1,6 @@
-[user]
-	name = Alican Akyildiz
-	email = alican15033@gmail.com
 [core]
 	editor = vim
+[init]
+	defaultBranch = main
+[include]
+	path = ~/.gitconfig.local

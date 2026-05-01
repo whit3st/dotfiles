@@ -1,14 +1,40 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# active monitor
-MONITOR=$(xrandr | grep " connected" | cut -d' ' -f1)
+set -euo pipefail
 
-if [ "$1" == "on" ]; then
-    xrandr --output "$MONITOR" --gamma 1.0:0.8:0.6
-    echo "Blue light filter active."
-elif [ "$1" == "off" ]; then
-    xrandr --output "$MONITOR" --gamma 1.0:1.0:1.0
-    echo "Blue light filter disabled."
-else
-    echo "Usage: nightmode.sh [on|off]"
+usage() {
+    printf 'Usage: %s [on|off]\n' "$(basename "$0")"
+}
+
+if [[ $# -ne 1 ]]; then
+    usage
+    exit 1
 fi
+
+case "$1" in
+    on)
+        gamma='1.0:0.8:0.6'
+        message='Blue light filter active.'
+        ;;
+    off)
+        gamma='1.0:1.0:1.0'
+        message='Blue light filter disabled.'
+        ;;
+    *)
+        usage
+        exit 1
+        ;;
+esac
+
+mapfile -t monitors < <(xrandr --query | awk '$2 == "connected" {print $1}')
+
+if [[ ${#monitors[@]} -eq 0 ]]; then
+    printf 'No connected monitors detected.\n' >&2
+    exit 1
+fi
+
+for monitor in "${monitors[@]}"; do
+    xrandr --output "$monitor" --gamma "$gamma"
+done
+
+printf '%s\n' "$message"

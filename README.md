@@ -19,6 +19,10 @@ cd dotfiles
 # 4. Stow
 stow .
 
+# 4.1 Set your git identity
+cp .gitconfig.local.example ~/.gitconfig.local
+# edit ~/.gitconfig.local with your name/email
+
 # 5. Reboot
 reboot
 ```
