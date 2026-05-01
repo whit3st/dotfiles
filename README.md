@@ -126,6 +126,18 @@ stow gtk theme wallpapers fontconfig
 ./services.sh --display-manager lightdm --add-docker-group
 ```
 
+## Makefile Shortcuts
+
+```bash
+make help
+make check
+make bootstrap
+make packages-desktop
+make services
+make stow-core
+make stow-desktop
+```
+
 ## Keybinds
 
 | Key | Action |
