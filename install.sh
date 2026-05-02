@@ -9,29 +9,148 @@ fi
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
-printf '==========================================\n'
-printf '      Dotfiles Installation (Modular)    \n'
-printf '==========================================\n\n'
+PACMAN_PKGS=(
+  # Base
+  base base-devel linux linux-headers linux-firmware
 
-printf '[*] Running bootstrap...\n'
-"${SCRIPT_DIR}/bootstrap.sh"
+  # Shell & Terminal
+  zsh alacritty kitty
 
-printf '[*] Installing default package profiles: core,desktop,dev\n'
-"${SCRIPT_DIR}/packages.sh" --profiles core,desktop,dev --with-hardware --with-aur
+  # Window Manager & Desktop
+  i3-wm i3lock i3status polybar rofi dmenu picom feh arandr
 
-printf '[*] Enabling default services...\n'
-"${SCRIPT_DIR}/services.sh" --display-manager lightdm --add-docker-group
+  # File Manager
+  thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman tumbler
 
-printf '[*] Installing Oh My Zsh (if missing)...\n'
-if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
+  # Display Manager
+  lightdm lightdm-gtk-greeter ly
+
+  # Audio
+  pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber pavucontrol
+
+  # Networking
+  networkmanager openssh bluez bluez-utils
+
+  # Graphics & Display
+  brightnessctl
+
+  # Fonts
+  noto-fonts noto-fonts-cjk ttf-dejavu ttf-jetbrains-mono-nerd ttf-liberation ttf-roboto woff2-font-awesome
+
+  # Development
+  git vim docker docker-compose gradle jdk-openjdk pciutils
+
+  # Utilities
+  stow htop tree fastfetch unzip unrar ntfs-3g xclip xdotool imagemagick img2pdf yt-dlp
+
+  # Applications
+  firefox discord mpv obs-studio flameshot mousepad
+
+  # GTK & Theming
+  kde-gtk-config nwg-look gtk-engine-murrine breeze-icons breeze-gtk breeze
+
+  # X11
+  xorg-xinit xorg-xset xorg-xsetroot xorg-xrandr autorandr wmname
+
+  # System
+  btrfs-progs efibootmgr zram-generator flatpak os-prober
+)
+
+AUR_PKGS=(
+  brave-bin visual-studio-code-bin slack-desktop legcord-bin alacritty-themes spoofdpi zapzap
+)
+
+print_status() { printf '[*] %s\n' "$1"; }
+print_error()  { printf '[x] %s\n' "$1" >&2; }
+
+install_yay() {
+  if command -v yay &>/dev/null; then
+    print_status "yay already installed"
+    return
+  fi
+  print_status "Installing yay..."
+  git clone https://aur.archlinux.org/yay.git /tmp/yay
+  (cd /tmp/yay && makepkg -si --noconfirm)
+  rm -rf /tmp/yay
+}
+
+add_hardware_packages() {
+  local cpu_vendor
+  cpu_vendor="$(awk -F: '/vendor_id/ {gsub(/^[[:space:]]+/, "", $2); print $2; exit}' /proc/cpuinfo)"
+
+  case "$cpu_vendor" in
+    GenuineIntel) PACMAN_PKGS+=(intel-ucode) ;;
+    AuthenticAMD) PACMAN_PKGS+=(amd-ucode) ;;
+  esac
+
+  if lspci | grep -qi 'NVIDIA'; then
+    PACMAN_PKGS+=(nvidia-utils nvidia-settings)
+  fi
+}
+
+setup_services() {
+  print_status "Enabling services..."
+  sudo systemctl enable NetworkManager
+  sudo systemctl enable bluetooth
+  sudo systemctl enable docker 2>/dev/null || true
+  sudo systemctl enable lightdm
+  sudo usermod -aG docker "$USER"
+}
+
+install_oh_my_zsh() {
+  if [[ -d "$HOME/.oh-my-zsh" ]]; then
+    print_status "Oh My Zsh already installed"
+    return
+  fi
+  print_status "Installing Oh My Zsh..."
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-fi
+}
 
-printf '[*] Stowing modular packages...\n'
-stow zsh git i3 polybar alacritty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers
+stow_dotfiles() {
+  print_status "Stowing dotfiles..."
+  cd "$SCRIPT_DIR"
+  stow zsh git i3 polybar alacritty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers
+}
 
-printf '\n==========================================\n'
-printf '[*] Installation complete.\n'
-printf '==========================================\n\n'
-printf '[!] Reboot recommended.\n'
-printf '[!] After reboot, run: chsh -s /bin/zsh\n'
+ensure_local_config() {
+  if [[ ! -f "$HOME/.gitconfig.local" ]]; then
+    cp "$SCRIPT_DIR/git/.gitconfig.local.example" "$HOME/.gitconfig.local"
+    print_status "Created ~/.gitconfig.local — edit it with your name/email"
+  fi
+  if [[ ! -f "$HOME/.zshrc.local" ]]; then
+    cp "$SCRIPT_DIR/zsh/.zshrc.local.example" "$HOME/.zshrc.local"
+    print_status "Created ~/.zshrc.local"
+  fi
+}
+
+main() {
+  printf '==========================================\n'
+  printf '       Dotfiles Installation Script      \n'
+  printf '==========================================\n\n'
+
+  print_status "Updating system..."
+  sudo pacman -Syu --noconfirm
+
+  add_hardware_packages
+
+  print_status "Installing packages..."
+  sudo pacman -S --needed --noconfirm "${PACMAN_PKGS[@]}"
+
+  install_yay
+
+  print_status "Installing AUR packages..."
+  yay -S --needed --noconfirm "${AUR_PKGS[@]}"
+
+  install_oh_my_zsh
+  setup_services
+  stow_dotfiles
+  ensure_local_config
+
+  printf '\n==========================================\n'
+  print_status "Installation complete!"
+  printf '==========================================\n\n'
+  printf '[!] Please reboot your system.\n'
+  printf '[!] After reboot, run: chsh -s /bin/zsh\n'
+}
+
+main "$@"
