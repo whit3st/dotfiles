@@ -19,3 +19,4 @@
 - zsh: mise activation errored on missing ~/.local/bin/mise; now resolves mise from PATH and guards if absent
 - git: remove stray `name` key from the [include] section of git/.gitconfig
 - touchpad: enable tap-to-click from the i3 config (exec_always xinput) so it survives reboot without a root xorg.conf.d file
+- packages/install: declare xorg-server, xf86-input-libinput, xorg-xkbcomp, xorg-setxkbmap explicitly so the X server isn't orphan-removed when a display manager is uninstalled

@@ -50,6 +50,7 @@ PACMAN_PKGS=(
   kde-gtk-config nwg-look breeze-icons breeze-gtk breeze
 
   # X11
+  xorg-server xf86-input-libinput xorg-xkbcomp xorg-setxkbmap
   xorg-xinit xorg-xset xorg-xsetroot xorg-xrandr xorg-xinput autorandr wmname
 
   # System
