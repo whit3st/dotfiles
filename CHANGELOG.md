@@ -13,6 +13,8 @@
 ### Changed
 - i3: volume step 10% -> 5%
 - packages.sh / install.sh: move gtk-engine-murrine to the AUR list (dropped from official repos)
+- Display manager: switch default from lightdm to ly (ly@tty2) across services.sh, install.sh, packages.sh, Makefile; lightdm no longer installed by default
 
 ### Fixed
 - zsh: mise activation errored on missing ~/.local/bin/mise; now resolves mise from PATH and guards if absent
+- git: remove stray `name` key from the [include] section of git/.gitconfig

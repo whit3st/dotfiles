@@ -23,7 +23,7 @@ PACMAN_PKGS=(
   thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman tumbler
 
   # Display Manager
-  lightdm lightdm-gtk-greeter ly
+  ly
 
   # Audio
   pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber pavucontrol
@@ -96,7 +96,7 @@ setup_services() {
   sudo systemctl enable bluetooth
   sudo systemctl enable docker 2>/dev/null || true
   sudo systemctl enable asusd 2>/dev/null || true
-  sudo systemctl enable lightdm
+  sudo systemctl enable ly@tty2.service
   sudo usermod -aG docker "$USER"
 }
 

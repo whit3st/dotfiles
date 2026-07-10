@@ -7,7 +7,7 @@ if [[ ${EUID} -eq 0 ]]; then
   exit 1
 fi
 
-DISPLAY_MANAGER="lightdm"
+DISPLAY_MANAGER="ly"
 ADD_DOCKER_GROUP=false
 
 usage() {
@@ -60,7 +60,10 @@ case "${DISPLAY_MANAGER}" in
     sudo systemctl enable lightdm
     ;;
   ly)
-    sudo systemctl enable ly
+    # ly ships a templated unit; run it on tty2 (keeps a getty on tty1 as a fallback).
+    # Also ensure lightdm isn't left enabled, or both DMs start and clash.
+    sudo systemctl disable lightdm 2>/dev/null || true
+    sudo systemctl enable ly@tty2.service
     ;;
   none)
     printf '[*] Skipping display manager enablement.\n'

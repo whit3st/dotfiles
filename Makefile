@@ -25,7 +25,7 @@ packages-desktop:
 	./packages.sh --profiles core,desktop,dev --with-hardware --with-aur
 
 services:
-	./services.sh --display-manager lightdm --add-docker-group
+	./services.sh --display-manager ly --add-docker-group
 
 stow-core:
 	stow zsh git
