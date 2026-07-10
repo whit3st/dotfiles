@@ -227,6 +227,9 @@ exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec_always --no-startup-id autorandr --change
 exec_always --no-startup-id feh --bg-fill "$HOME/wallpapers/wallp4.jpeg"
 
+# Touchpad tap-to-click (user-level; survives reboot without a root xorg.conf.d file)
+exec_always --no-startup-id sh -c 'xinput set-prop "$(xinput list --name-only | grep -i touchpad | head -1)" "libinput Tapping Enabled" 1'
+
 default_border pixel 0
 default_floating_border pixel 0
 
