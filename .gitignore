@@ -1,3 +1,6 @@
 
 # machine-generated fontconfig cache
 fontconfig/.local/share/fonts/.uuid
+
+# autorandr profiles are per-machine (EDID-specific) — keep local, not shared
+autorandr/.config/autorandr/*/

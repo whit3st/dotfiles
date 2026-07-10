@@ -1,1 +1,4 @@
-Xft.dpi: 144
+! Neutral baseline only. The real per-host DPI is applied at login by
+! ~/dtf-display.sh (from hosts/<hostname>/host.env). Do not hardcode a machine
+! value here — this file is shared across all machines.
+Xft.dpi: 96

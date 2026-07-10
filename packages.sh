@@ -7,6 +7,10 @@ if [[ ${EUID} -eq 0 ]]; then
   exit 1
 fi
 
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=lib/detect.sh
+. "${SCRIPT_DIR}/lib/detect.sh"
+
 CORE_PKGS=(
   git stow zsh vim fastfetch htop tree unzip unrar ntfs-3g
   openssh networkmanager bluez bluez-utils
@@ -72,21 +76,15 @@ install_yay() {
 }
 
 add_hardware_packages() {
-  local cpu_vendor
-  cpu_vendor="$(awk -F: '/vendor_id/ {gsub(/^[[:space:]]+/, "", $2); print $2; exit}' /proc/cpuinfo)"
+  # Microcode for the detected CPU.
+  local ucode
+  ucode="$(dtf_ucode_pkg)"
+  [[ -n "${ucode}" ]] && SELECTED_PKGS+=("${ucode}")
 
-  case "${cpu_vendor}" in
-    GenuineIntel)
-      SELECTED_PKGS+=(intel-ucode)
-      ;;
-    AuthenticAMD)
-      SELECTED_PKGS+=(amd-ucode)
-      ;;
-  esac
-
-  if lspci | grep -qi 'NVIDIA'; then
-    SELECTED_PKGS+=(nvidia-utils nvidia-settings)
-  fi
+  # Userspace GPU drivers for every detected GPU (amd/intel/nvidia, incl. hybrid).
+  local -a gpu
+  read -r -a gpu <<< "$(dtf_gpu_pkgs)"
+  [[ ${#gpu[@]} -gt 0 ]] && SELECTED_PKGS+=("${gpu[@]}")
 }
 
 PROFILE_LIST="core"

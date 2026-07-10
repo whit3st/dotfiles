@@ -8,6 +8,8 @@ if [[ ${EUID} -eq 0 ]]; then
 fi
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=lib/detect.sh
+. "${SCRIPT_DIR}/lib/detect.sh"
 
 PACMAN_PKGS=(
   # Base
@@ -78,17 +80,13 @@ install_yay() {
 }
 
 add_hardware_packages() {
-  local cpu_vendor
-  cpu_vendor="$(awk -F: '/vendor_id/ {gsub(/^[[:space:]]+/, "", $2); print $2; exit}' /proc/cpuinfo)"
+  local ucode
+  ucode="$(dtf_ucode_pkg)"
+  [[ -n "$ucode" ]] && PACMAN_PKGS+=("$ucode")
 
-  case "$cpu_vendor" in
-    GenuineIntel) PACMAN_PKGS+=(intel-ucode) ;;
-    AuthenticAMD) PACMAN_PKGS+=(amd-ucode) ;;
-  esac
-
-  if lspci | grep -qi 'NVIDIA'; then
-    PACMAN_PKGS+=(nvidia-utils nvidia-settings)
-  fi
+  local -a gpu
+  read -r -a gpu <<< "$(dtf_gpu_pkgs)"
+  [[ ${#gpu[@]} -gt 0 ]] && PACMAN_PKGS+=("${gpu[@]}")
 }
 
 setup_services() {

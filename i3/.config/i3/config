@@ -223,8 +223,11 @@ bindsym Mod4+r mode "resize"
 # exec i3-config-wizard
 
 exec_always --no-startup-id picom --config ~/.config/picom/picom.conf
-exec_always --no-startup-id ~/.config/polybar/launch.sh
+# Display: apply saved layout (autorandr), then max-refresh + per-host DPI,
+# BEFORE polybar so it inherits the right DPI (polybar dpi = 0 auto-follows).
 exec_always --no-startup-id autorandr --change
+exec_always --no-startup-id ~/dtf-display.sh
+exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec_always --no-startup-id feh --bg-fill "$HOME/wallpapers/wallp4.jpeg"
 
 # Touchpad tap-to-click (user-level; survives reboot without a root xorg.conf.d file)
