@@ -51,6 +51,10 @@ if systemctl list-unit-files | grep -q '^docker\.service'; then
   sudo systemctl enable docker
 fi
 
+if systemctl list-unit-files | grep -q '^asusd\.service'; then
+  sudo systemctl enable asusd
+fi
+
 case "${DISPLAY_MANAGER}" in
   lightdm)
     sudo systemctl enable lightdm

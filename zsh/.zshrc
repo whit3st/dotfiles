@@ -120,7 +120,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # mise version manager
-eval "$($HOME/.local/bin/mise activate zsh)" # added by https://mise.run/zsh
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh)"
+fi
 
 # opencode
 export PATH="$HOME/.opencode/bin:$PATH"
@@ -136,3 +138,4 @@ esac
 if [ -f "$HOME/.zshrc.local" ]; then
   source "$HOME/.zshrc.local"
 fi
+export PATH="$HOME/.local/bin:$PATH"

@@ -34,7 +34,7 @@ stow-desktop:
 	stow i3 polybar alacritty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers
 
 stow-all:
-	stow zsh git i3 polybar alacritty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers
+	stow zsh git i3 polybar alacritty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers --adopt
 
 unstow-desktop:
 	stow -D i3 polybar alacritty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers

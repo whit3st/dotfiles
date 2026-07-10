@@ -47,10 +47,10 @@ PACMAN_PKGS=(
   firefox discord mpv obs-studio flameshot mousepad
 
   # GTK & Theming
-  kde-gtk-config nwg-look gtk-engine-murrine breeze-icons breeze-gtk breeze
+  kde-gtk-config nwg-look breeze-icons breeze-gtk breeze
 
   # X11
-  xorg-xinit xorg-xset xorg-xsetroot xorg-xrandr autorandr wmname
+  xorg-xinit xorg-xset xorg-xsetroot xorg-xrandr xorg-xinput autorandr wmname
 
   # System
   btrfs-progs efibootmgr zram-generator flatpak os-prober
@@ -58,6 +58,8 @@ PACMAN_PKGS=(
 
 AUR_PKGS=(
   brave-bin visual-studio-code-bin slack-desktop legcord-bin alacritty-themes spoofdpi zapzap
+  gtk-engine-murrine  # moved from official repos to AUR
+  asusctl             # ASUS laptop control: battery charge limit, kbd backlight, power profiles
 )
 
 print_status() { printf '[*] %s\n' "$1"; }
@@ -93,6 +95,7 @@ setup_services() {
   sudo systemctl enable NetworkManager
   sudo systemctl enable bluetooth
   sudo systemctl enable docker 2>/dev/null || true
+  sudo systemctl enable asusd 2>/dev/null || true
   sudo systemctl enable lightdm
   sudo usermod -aG docker "$USER"
 }
@@ -145,6 +148,15 @@ main() {
   setup_services
   stow_dotfiles
   ensure_local_config
+
+  # Deploy system-level files (e.g. /etc/X11/xorg.conf.d touchpad tap-to-click).
+  # The system/ tree mirrors absolute paths and is copied, not stowed.
+  if [[ -d "$SCRIPT_DIR/system" ]]; then
+    print_status "Installing system files to /etc..."
+    ( cd "$SCRIPT_DIR/system" && find . -type f -print0 | while IFS= read -r -d '' f; do
+        sudo install -Dm644 "$f" "/${f#./}"
+      done )
+  fi
 
   printf '\n==========================================\n'
   print_status "Installation complete!"

@@ -16,12 +16,12 @@ DESKTOP_PKGS=(
   i3-wm i3lock i3status polybar rofi dmenu picom feh arandr
   thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman tumbler
   alacritty kitty flameshot mousepad
-  xorg-xinit xorg-xset xorg-xsetroot xorg-xrandr wmname
+  xorg-xinit xorg-xset xorg-xsetroot xorg-xrandr xorg-xinput wmname
   autorandr xclip xdotool brightnessctl
   pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber pavucontrol
   noto-fonts noto-fonts-cjk ttf-dejavu ttf-jetbrains-mono-nerd ttf-liberation ttf-roboto
   woff2-font-awesome
-  gtk-engine-murrine breeze-icons breeze-gtk breeze kde-gtk-config nwg-look
+  breeze-icons breeze-gtk breeze kde-gtk-config nwg-look
 )
 
 DEV_PKGS=(
@@ -38,6 +38,8 @@ SYSTEM_PKGS=(
 
 AUR_PKGS=(
   brave-bin visual-studio-code-bin slack-desktop legcord-bin alacritty-themes spoofdpi zapzap
+  gtk-engine-murrine  # moved from official repos to AUR
+  asusctl             # ASUS laptop control: battery charge limit, kbd backlight, power profiles
 )
 
 usage() {
