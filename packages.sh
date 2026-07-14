@@ -19,7 +19,7 @@ CORE_PKGS=(
 DESKTOP_PKGS=(
   i3-wm i3lock i3status polybar rofi dmenu picom feh arandr ly
   thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman tumbler
-  alacritty kitty flameshot mousepad
+  alacritty kitty flameshot mousepad blueman
   xorg-server xf86-input-libinput xorg-xkbcomp xorg-setxkbmap
   xorg-xinit xorg-xset xorg-xsetroot xorg-xrandr xorg-xinput wmname
   autorandr xclip xdotool brightnessctl

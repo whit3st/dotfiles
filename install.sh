@@ -31,7 +31,7 @@ PACMAN_PKGS=(
   pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber pavucontrol
 
   # Networking
-  networkmanager openssh bluez bluez-utils
+  networkmanager openssh bluez bluez-utils blueman
 
   # Graphics & Display
   brightnessctl
