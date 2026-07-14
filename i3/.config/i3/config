@@ -47,6 +47,9 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 
+# Copilot key (sends Super+Shift+F23): toggle internal panel 60/120 Hz to save battery
+bindsym Mod4+Shift+F23 exec --no-startup-id ~/.config/polybar/scripts/toggle-refresh.sh
+
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
 set $up l
