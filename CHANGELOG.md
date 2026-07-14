@@ -6,6 +6,7 @@
 - polybar: live power-draw module (`PWR`, watts read from `/sys`, `+` prefix while charging) and current refresh-rate module (`REF`, eDP Hz, updated instantly via IPC)
 - i3 + scripts: Copilot key (`Super+Shift+F23`) toggles the internal panel between 60/120 Hz to save battery — `polybar/scripts/{toggle-refresh,refresh-rate,power-draw}.sh` plus `test-refresh-toggle.sh` unit test
 - Bluetooth: blueman applet (i3 autostart) and `blueman` package (install.sh, packages.sh)
+- zsh: pnpm aliases (`pi`/`pb`/`pt`/`pf`/`pl`)
 
 ## 2026-07-10
 

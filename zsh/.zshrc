@@ -114,7 +114,11 @@ alias prb="sudo modprobe v4l2loopback"
 alias prepdocker="docker stop epistola && docker rm epistola -v && docker run -d --name epistola -e POSTGRES_USER=epistola -e POSTGRES_PASSWORD=epistola -e POSTGRES_DB=epistola -p 4001:5432 postgres:latest"
 alias ytp='mpv "$(xclip -o -selection clipboard)"'
 alias gs="gradle :apps:epistola:bootRun --args='--spring.profiles.active=local'"
-
+alias pi="pnpm install"
+alias pb="pnpm build"
+alias pt="pnpm test"
+alias pf="pnpm format"
+alias pl="pnpm lint:check"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
