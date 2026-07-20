@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-07-20
+
+### Added
+- i3: on-demand screen lock (`Ctrl+Alt+L` -> `loginctl lock-session`, routed through the existing xss-lock/i3lock; locks without suspending). `$mod+l` was unavailable since `$up = l`.
+
+### Changed
+- i3: disable blueman-applet autostart (bluetooth tray icon); Bluetooth itself stays enabled, manage via bluetoothctl/blueman-manager
+
 ## 2026-07-14
 
 ### Added
