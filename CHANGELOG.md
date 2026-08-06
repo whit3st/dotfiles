@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-08-06
+
+### Changed
+- polybar: date module always shows the full weekday/date/time now, no click-to-toggle and no seconds
+- polybar: xwindow title cap tightened 60 -> 40 chars so a long window title can no longer push the right-side modules off the bar
+- polybar: cpu + cpufreq merged into `cpuinfo` (`CPU 12% | 1.75GHz`); battery + power merged into `batpower` (`BAT 54% | 12W`, LOW/CHR/FULL states preserved); wlan switched from `internal/network` to a custom script showing SSID + last two IP octets only (interface name dropped)
+
+### Added
+- `polybar/scripts/{cpu-info,battery-power,wlan-info}.sh` plus matching `test-*.sh` unit tests (mirrors the existing `test-refresh-toggle.sh` pattern)
+
+### Removed
+- `polybar/scripts/{power-draw,cpu-freq}.sh` (folded into the merged modules above)
+
 ## 2026-07-20
 
 ### Added
