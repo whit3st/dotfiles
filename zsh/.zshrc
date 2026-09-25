@@ -120,23 +120,28 @@ alias pt="pnpm test"
 alias pf="pnpm format"
 alias pl="pnpm lint:check"
 alias pw="pnpm -r watch"
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# mise version manager
-if command -v mise >/dev/null 2>&1; then
-  eval "$(mise activate zsh)"
-fi
+alias wififix="sudo modprobe -r mt7925e && sudo modprobe mt7925e"
 
 # opencode
 export PATH="$HOME/.opencode/bin:$PATH"
+# OPENCODE_GO_API_KEY intentionally NOT set here (was a leaked secret in a tracked file).
+# - shared server + `op` read it from ~/.config/opencode/serve.env (mode 0600)
+# - plain `opencode` uses the opencode-go entry in ~/.local/share/opencode/auth.json
+
+# opencode-slim: "op" now ATTACHES to the shared server (systemd --user opencode-server.service)
+# so N shells share one backend instead of each spawning a standalone instance.
+# Plain "opencode" is redirected to the same slim/attached setup by the shim at
+# ~/.local/bin/opencode, so herdr's hardcoded restore command (`opencode
+# --session <id>`) and bare `opencode` both land on the shared server. Real
+# subcommands (serve, upgrade, attach, run, ...) still pass through to stock.
+#   server control:  systemctl --user {start|stop|restart|status} opencode-server
+alias op='OPENCODE_CONFIG_DIR="$HOME/.config/opencode-slim" OPENCODE_TUI_CONFIG="$HOME/.config/opencode-slim/tui.json" OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS=true OPENCODE_ENABLE_EXA=1 opencode-attach'
 
 # pnpm
 export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
 esac
 # pnpm end
 
@@ -144,3 +149,8 @@ if [ -f "$HOME/.zshrc.local" ]; then
   source "$HOME/.zshrc.local"
 fi
 export PATH="$HOME/.local/bin:$PATH"
+
+# mise version manager — keep last so its PATH entries outrank everything above
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh)"
+fi
