@@ -23,6 +23,8 @@ required_paths=(
   "$HOME/.config/alacritty/alacritty.toml"
   "$HOME/.config/ghostty/config"
   "$HOME/.config/picom/picom.conf"
+  "$HOME/.config/nvim/init.lua"
+  "$HOME/.config/herdr/config.toml"
 )
 
 for path in "${required_paths[@]}"; do
@@ -60,6 +62,18 @@ if [[ -f "$local_identity" ]]; then
   ok "local git identity found"
 else
   warn "missing local git identity: $local_identity"
+fi
+
+if command -v nvim >/dev/null 2>&1; then
+  ok "nvim available"
+else
+  warn "nvim not installed"
+fi
+
+if command -v herdr >/dev/null 2>&1; then
+  ok "herdr available"
+else
+  warn "herdr not installed"
 fi
 
 ok "dotfiles check complete"

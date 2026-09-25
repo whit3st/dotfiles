@@ -1,0 +1,51 @@
+onboarding = false
+
+[ui]
+status_indicators = "symbols"
+
+# tmux parity: `bind c new-window` opens a window immediately (no name prompt).
+prompt_new_tab_name = false
+
+# tmux parity: status-right -> tab-bar right edge.
+# (pane path + git branch already live in the sidebar's space rows.)
+tab_bar_right = [
+  { type = "command", command = "python3 ~/.tmux/scripts/cpu_mem.py", interval_seconds = 5, timeout_seconds = 2 },
+  { type = "datetime", format = "%d-%m-%Y %H:%M" },
+]
+tab_bar_right_separator = " | "
+
+[ui.toast]
+delivery = "herdr"
+
+[theme]
+name = "gruvbox"
+auto_switch = false
+
+[ui.sound]
+enabled = true
+
+# --- parity with ~/.tmux.conf ---------------------------------------------
+
+[keys]
+# tmux: set -g prefix C-a / unbind C-b
+# To send a literal ctrl+a to a pane, press it twice (tmux's send-prefix).
+prefix = "ctrl+a"
+
+# tmux: bind T run-shell ~/.tmux/scripts/scratchpad.sh
+# Herdr has no tmux popup; this uses a native popup. Key is lowercase `t`
+# because prefix+shift+t is already Herdr's rename-tab binding.
+[[keys.command]]
+key = "prefix+t"
+type = "popup"
+command = "nvim \"$HOME/.tmux/scratchpad.md\""
+description = "scratchpad (nvim)"
+width = "80%"
+height = "80%"
+
+[advanced]
+# tmux: set -g history-limit 100000 (lines). Herdr counts bytes:
+# ~100k lines at ~100 B/line = 10 MB, which is also Herdr's default.
+scrollback_limit_bytes = 10000000
+
+[experimental]
+kitty_graphics = true

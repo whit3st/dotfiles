@@ -21,7 +21,7 @@ cd ~/dotfiles
 ./bootstrap.sh
 ./packages.sh --profiles core,desktop,dev --with-hardware --with-aur
 ./services.sh --display-manager lightdm --add-docker-group
-stow zsh git i3 polybar alacritty ghostty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers
+stow zsh git i3 polybar alacritty ghostty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers nvim herdr
 cp .gitconfig.local.example ~/.gitconfig.local
 cp .zshrc.local.example ~/.zshrc.local
 cp i3/.config/i3/local.conf.example ~/.config/i3/local.conf
@@ -38,11 +38,12 @@ cd ~
 git clone git@github.com:USERNAME/dotfiles.git
 
 # 3. Run install script (installs packages, yay, oh-my-zsh, enables services)
+# install.sh also installs the herdr binary and pre-seeds nvim plugins
 cd dotfiles
 ./install.sh
 
 # 4. Stow selected packages
-stow zsh git i3 polybar alacritty ghostty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers
+stow zsh git i3 polybar alacritty ghostty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers nvim herdr
 
 # 4.1 Set your git identity
 cp .gitconfig.local.example ~/.gitconfig.local
@@ -94,6 +95,8 @@ autorandr --save home
 | `scripts` | Helper scripts (night mode) |
 | `theme` | Orchis theme files |
 | `wallpapers` | Wallpapers |
+| `nvim` | Neovim config (binary + deps via dev profile / install.sh) |
+| `herdr` | Terminal multiplexer config (binary via install.sh) |
 
 ## Minimal Stow Example
 
@@ -112,6 +115,9 @@ stow i3 polybar rofi
 
 # only visuals
 stow gtk theme wallpapers fontconfig
+
+# editor + multiplexer
+stow nvim herdr
 ```
 
 ## Modular Installer Commands
@@ -150,7 +156,7 @@ make stow-desktop
 | `Mod+Shift+1-0` | Move to workspace |
 | `Mod+Shift+n` | Night mode on |
 | `Mod+Ctrl+n` | Night mode off |
-| `Print` | Screenshot (flameshot) |
+| `Print` | Screenshot (maim script) |
 
 ## Notes
 
@@ -165,8 +171,8 @@ make stow-desktop
 ./check.sh
 
 # if a package path changed, restow it
-stow -D i3 polybar picom alacritty ghostty rofi gtk
-stow i3 polybar picom alacritty ghostty rofi gtk
+stow -D i3 polybar picom alacritty ghostty rofi gtk nvim herdr
+stow i3 polybar picom alacritty ghostty rofi gtk nvim herdr
 
 # restart common desktop pieces
 i3-msg reload

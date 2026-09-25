@@ -41,6 +41,7 @@ PACMAN_PKGS=(
 
   # Development
   git vim docker docker-compose gradle jdk-openjdk pciutils
+  neovim fd fzf ripgrep tree-sitter-cli
 
   # Utilities
   stow htop tree fastfetch unzip unrar ntfs-3g xclip xdotool imagemagick img2pdf yt-dlp
@@ -108,10 +109,19 @@ install_oh_my_zsh() {
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 }
 
+install_herdr() {
+  if command -v herdr &>/dev/null; then
+    print_status "herdr already installed"
+    return
+  fi
+  print_status "Installing herdr..."
+  sh -c "$(curl -fsSL https://herdr.dev/install.sh)"
+}
+
 stow_dotfiles() {
   print_status "Stowing dotfiles..."
   cd "$SCRIPT_DIR"
-  stow zsh git i3 polybar alacritty ghostty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers
+  stow zsh git i3 polybar alacritty ghostty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers nvim herdr
 }
 
 ensure_local_config() {
@@ -144,9 +154,13 @@ main() {
   yay -S --needed --noconfirm "${AUR_PKGS[@]}"
 
   install_oh_my_zsh
+  install_herdr
   setup_services
   stow_dotfiles
   ensure_local_config
+
+  print_status "Pre-seeding Neovim plugins..."
+  if command -v nvim >/dev/null 2>&1; then nvim --headless "+Lazy! sync" +qa || print_status "warning: nvim plugin sync failed, will retry on first launch"; fi
 
   # Deploy system-level files (e.g. /etc/X11/xorg.conf.d touchpad tap-to-click).
   # The system/ tree mirrors absolute paths and is copied, not stowed.

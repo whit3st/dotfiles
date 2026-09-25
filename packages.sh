@@ -31,6 +31,7 @@ DESKTOP_PKGS=(
 
 DEV_PKGS=(
   docker docker-compose gradle jdk-openjdk mise nvm
+  neovim fd fzf ripgrep tree-sitter-cli
 )
 
 MEDIA_PKGS=(
