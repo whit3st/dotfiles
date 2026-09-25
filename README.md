@@ -21,7 +21,7 @@ cd ~/dotfiles
 ./bootstrap.sh
 ./packages.sh --profiles core,desktop,dev --with-hardware --with-aur
 ./services.sh --display-manager lightdm --add-docker-group
-stow zsh git i3 polybar alacritty ghostty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers nvim herdr
+stow zsh git i3 polybar alacritty ghostty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers nvim herdr helpers
 cp .gitconfig.local.example ~/.gitconfig.local
 cp .zshrc.local.example ~/.zshrc.local
 cp i3/.config/i3/local.conf.example ~/.config/i3/local.conf
@@ -43,7 +43,7 @@ cd dotfiles
 ./install.sh
 
 # 4. Stow selected packages
-stow zsh git i3 polybar alacritty ghostty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers nvim herdr
+stow zsh git i3 polybar alacritty ghostty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers nvim herdr helpers
 
 # 4.1 Set your git identity
 cp .gitconfig.local.example ~/.gitconfig.local
@@ -97,6 +97,7 @@ autorandr --save home
 | `wallpapers` | Wallpapers |
 | `nvim` | Neovim config (binary + deps via dev profile / install.sh) |
 | `herdr` | Terminal multiplexer config (binary via install.sh) |
+| `helpers` | Shared multiplexer helpers (cpu/mem widget, scratchpad; $HOME/.helpers) |
 
 ## Minimal Stow Example
 
@@ -171,8 +172,8 @@ make stow-desktop
 ./check.sh
 
 # if a package path changed, restow it
-stow -D i3 polybar picom alacritty ghostty rofi gtk nvim herdr
-stow i3 polybar picom alacritty ghostty rofi gtk nvim herdr
+stow -D i3 polybar picom alacritty ghostty rofi gtk nvim herdr helpers
+stow i3 polybar picom alacritty ghostty rofi gtk nvim herdr helpers
 
 # restart common desktop pieces
 i3-msg reload

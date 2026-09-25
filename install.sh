@@ -121,7 +121,7 @@ install_herdr() {
 stow_dotfiles() {
   print_status "Stowing dotfiles..."
   cd "$SCRIPT_DIR"
-  stow zsh git i3 polybar alacritty ghostty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers nvim herdr
+  stow zsh git i3 polybar alacritty ghostty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers nvim herdr helpers
 }
 
 ensure_local_config() {
@@ -132,6 +132,11 @@ ensure_local_config() {
   if [[ ! -f "$HOME/.zshrc.local" ]]; then
     cp "$SCRIPT_DIR/zsh/.zshrc.local.example" "$HOME/.zshrc.local"
     print_status "Created ~/.zshrc.local"
+  fi
+  if [[ ! -f "$HOME/.helpers/scratchpad.md" ]]; then
+    mkdir -p "$HOME/.helpers"
+    touch "$HOME/.helpers/scratchpad.md"
+    print_status "Created ~/.helpers/scratchpad.md"
   fi
 }
 

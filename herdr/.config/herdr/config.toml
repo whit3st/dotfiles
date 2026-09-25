@@ -9,7 +9,7 @@ prompt_new_tab_name = false
 # tmux parity: status-right -> tab-bar right edge.
 # (pane path + git branch already live in the sidebar's space rows.)
 tab_bar_right = [
-  { type = "command", command = "python3 ~/.tmux/scripts/cpu_mem.py", interval_seconds = 5, timeout_seconds = 2 },
+  { type = "command", command = "python3 ~/.helpers/cpu_mem.py", interval_seconds = 5, timeout_seconds = 2 },
   { type = "datetime", format = "%d-%m-%Y %H:%M" },
 ]
 tab_bar_right_separator = " | "
@@ -31,13 +31,13 @@ enabled = true
 # To send a literal ctrl+a to a pane, press it twice (tmux's send-prefix).
 prefix = "ctrl+a"
 
-# tmux: bind T run-shell ~/.tmux/scripts/scratchpad.sh
+# tmux: bind T run-shell ~/.helpers/scratchpad.sh
 # Herdr has no tmux popup; this uses a native popup. Key is lowercase `t`
 # because prefix+shift+t is already Herdr's rename-tab binding.
 [[keys.command]]
 key = "prefix+t"
 type = "popup"
-command = "nvim \"$HOME/.tmux/scratchpad.md\""
+command = "nvim \"$HOME/.helpers/scratchpad.md\""
 description = "scratchpad (nvim)"
 width = "80%"
 height = "80%"

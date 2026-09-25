@@ -25,6 +25,7 @@ required_paths=(
   "$HOME/.config/picom/picom.conf"
   "$HOME/.config/nvim/init.lua"
   "$HOME/.config/herdr/config.toml"
+  "$HOME/.helpers/cpu_mem.py"
 )
 
 for path in "${required_paths[@]}"; do
