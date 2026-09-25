@@ -16,7 +16,7 @@ PACMAN_PKGS=(
   base base-devel linux linux-headers linux-firmware
 
   # Shell & Terminal
-  zsh alacritty kitty
+  zsh alacritty kitty ghostty
 
   # Window Manager & Desktop
   i3-wm i3lock i3status polybar rofi dmenu picom feh arandr
@@ -111,7 +111,7 @@ install_oh_my_zsh() {
 stow_dotfiles() {
   print_status "Stowing dotfiles..."
   cd "$SCRIPT_DIR"
-  stow zsh git i3 polybar alacritty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers
+  stow zsh git i3 polybar alacritty ghostty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers
 }
 
 ensure_local_config() {

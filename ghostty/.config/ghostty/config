@@ -1,0 +1,64 @@
+# Ghostty configuration
+# Ported from the previous Alacritty setup (~/.config/alacritty/alacritty.toml).
+
+# --- Font ---------------------------------------------------------------
+font-family = JetBrainsMono Nerd Font
+font-size = 10
+
+# --- Window -------------------------------------------------------------
+# Alacritty: [window] padding 20/20, opacity 0.95, decorations "Full"
+window-padding-x = 20
+window-padding-y = 20
+background-opacity = 0.95
+background-blur = true
+
+# No titlebar / window borders at all.
+window-decoration = none
+
+# --- Cursor -------------------------------------------------------------
+# Alacritty: [cursor] shape "Beam", blinking "On"
+cursor-style = bar
+cursor-style-blink = true
+
+# --- Colors: Tokyo Night (same palette as the Alacritty config) ---------
+background = #1a1b26
+foreground = #a9b1d6
+
+palette = 0=#32344a
+palette = 1=#f7768e
+palette = 2=#9ece6a
+palette = 3=#e0af68
+palette = 4=#7aa2f7
+palette = 5=#ad8ee6
+palette = 6=#449dab
+palette = 7=#787c99
+palette = 8=#444b6a
+palette = 9=#ff7a93
+palette = 10=#b9f27c
+palette = 11=#ff9e64
+palette = 12=#7da6ff
+palette = 13=#bb9af7
+palette = 14=#0db9d7
+palette = 15=#acb0d0
+
+# --- Selection ----------------------------------------------------------
+# Alacritty: [selection] save_to_clipboard = true
+copy-on-select = clipboard
+
+# --- Nothing in the terminal should look or act clickable --------------
+# No hoverable/clickable URL previews.
+link-url = false
+# Clicking in the prompt must not move the cursor.
+cursor-click-to-move = false
+
+# --- Mouse --------------------------------------------------------------
+# Alacritty: mouse Right = Paste
+right-click-action = paste
+
+# --- Behaviour ----------------------------------------------------------
+# Alacritty closes instantly; don't ask to confirm closing a busy surface.
+confirm-close-surface = false
+
+# --- Keybindings --------------------------------------------------------
+# Alacritty: Shift+Return -> ESC CR
+keybind = shift+enter=text:\x1b\r

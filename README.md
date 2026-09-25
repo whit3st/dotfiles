@@ -1,6 +1,6 @@
 # Dotfiles
 
-Modular GNU Stow dotfiles for Arch Linux (i3 + polybar + alacritty + picom).
+Modular GNU Stow dotfiles for Arch Linux (i3 + polybar + ghostty + picom).
 
 ## Quick Start
 
@@ -21,7 +21,7 @@ cd ~/dotfiles
 ./bootstrap.sh
 ./packages.sh --profiles core,desktop,dev --with-hardware --with-aur
 ./services.sh --display-manager lightdm --add-docker-group
-stow zsh git i3 polybar alacritty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers
+stow zsh git i3 polybar alacritty ghostty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers
 cp .gitconfig.local.example ~/.gitconfig.local
 cp .zshrc.local.example ~/.zshrc.local
 cp i3/.config/i3/local.conf.example ~/.config/i3/local.conf
@@ -42,7 +42,7 @@ cd dotfiles
 ./install.sh
 
 # 4. Stow selected packages
-stow zsh git i3 polybar alacritty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers
+stow zsh git i3 polybar alacritty ghostty picom rofi gtk x11 scripts autorandr pipewire fontconfig theme wallpapers
 
 # 4.1 Set your git identity
 cp .gitconfig.local.example ~/.gitconfig.local
@@ -82,7 +82,8 @@ autorandr --save home
 | `git` | Git config and local identity template |
 | `i3` | i3 window manager config |
 | `polybar` | Polybar config and launcher |
-| `alacritty` | Terminal config |
+| `alacritty` | Terminal config (fallback) |
+| `ghostty` | Terminal config (default) |
 | `picom` | Compositor config |
 | `rofi` | Launcher config |
 | `gtk` | GTK 2/3/4 settings |
@@ -97,14 +98,14 @@ autorandr --save home
 ## Minimal Stow Example
 
 ```bash
-stow zsh git i3 polybar alacritty picom rofi
+stow zsh git i3 polybar alacritty ghostty picom rofi
 ```
 
 ## Per-Package Examples
 
 ```bash
 # only terminal stack
-stow alacritty picom
+stow ghostty alacritty picom
 
 # only wm + bar + launcher
 stow i3 polybar rofi
@@ -164,8 +165,8 @@ make stow-desktop
 ./check.sh
 
 # if a package path changed, restow it
-stow -D i3 polybar picom alacritty rofi gtk
-stow i3 polybar picom alacritty rofi gtk
+stow -D i3 polybar picom alacritty ghostty rofi gtk
+stow i3 polybar picom alacritty ghostty rofi gtk
 
 # restart common desktop pieces
 i3-msg reload

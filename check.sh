@@ -21,6 +21,7 @@ required_paths=(
   "$HOME/.config/i3/config"
   "$HOME/.config/polybar/config.ini"
   "$HOME/.config/alacritty/alacritty.toml"
+  "$HOME/.config/ghostty/config"
   "$HOME/.config/picom/picom.conf"
 )
 
